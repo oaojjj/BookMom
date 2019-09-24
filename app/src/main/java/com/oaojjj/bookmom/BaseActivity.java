@@ -12,12 +12,18 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+/**
+ * Toolbar 가 필요한 모든 Activity 는 이것을 상속해야 한다.
+  */
 public class BaseActivity extends AppCompatActivity {
+
+    private static String USER_NAME = "default";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_toolbar);
+
     }
 
 
@@ -35,19 +41,19 @@ public class BaseActivity extends AppCompatActivity {
         setTitle("W A P");
     }
 
-
     // 메뉴 등록
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(isSignIn()){
+        if(isSignIn()&&useToolbar()){
             getMenuInflater().inflate(R.menu.my_page_menu,menu); // 로그인
+            menu.findItem(R.id.menu_my_page).setTitle(USER_NAME);
         }
         else{
             getMenuInflater().inflate(R.menu.basic_menu,menu); // 비로그인
         }
-
         return true;
     }
+
 
     // 메뉴 클릭 이벤트
     @Override
@@ -57,18 +63,24 @@ public class BaseActivity extends AppCompatActivity {
                 // 로그인 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "로그인", Toast.LENGTH_SHORT).show();
                 return true;
-
             case R.id.menu_sign_up:
                 // 회원가입 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "회원가입", Toast.LENGTH_SHORT).show();
                 return true;
-
-            case R.menu.my_page_menu:
+            case R.id.menu_my_page:
                 // 마이페이지 메뉴 클릭 이벤트 구현
-                Toast.makeText(getApplicationContext(), "회원가입", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "마이페이지", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 툴바의 사용 유무
+     * @return 사용 : true / 사용안함 : 오버라이딩해서 false 반환
+     */
+    private boolean useToolbar() {
+        return true;
     }
 
     /**
