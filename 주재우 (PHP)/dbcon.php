@@ -31,6 +31,6 @@ if (mysqli_connect_errno())
    }
 
    header('Content-Type: text/html; charset=utf-8');
-   $_SESSION['name']=null;
+   $_SESSION['id']=null;
    session_start();
 ?>

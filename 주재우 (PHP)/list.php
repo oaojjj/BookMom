@@ -1,7 +1,7 @@
 <?php
 include ('dbcon.php');
 if($_SESSION){
-$name=$_SESSION['name'];}
+$id=$_SESSION['id'];}
 else{
   ?><html>
   <input type="button" value="로그인" onclick="location.href='./login.php'">
@@ -14,7 +14,7 @@ $mysql="select * from book";
 $result=mysqli_query($con,$mysql);
 while($row=mysqli_fetch_array($result)){
 extract($row);
-array_push($data,array('bno'=>$row['bno'],'title'=>$row['title'],'author'=>$row['author'],'publisher'=>$row['publisher'],'available'=>$row['available']));
+array_push($data,array('bno'=>$row['bno'],'title'=>$row['title'],'kind'=>$row['kind'],'available'=>$row['available']));
 }
 }
 else{
@@ -24,30 +24,13 @@ else{
   if($count!=0){
   while($row=mysqli_fetch_array($result)){
     extract($row);
-    array_push($data,array('bno'=>$row['bno'],'title'=>$row['title'],'author'=>$row['author'],'publisher'=>$row['publisher'],'available'=>$row['available']));
+    array_push($data,array('bno'=>$row['bno'],'title'=>$row['title'],'kind'=>$row['kind'],'available'=>$row['available']));
 }}
 else{  echo "검색 목록이 없습니다";
 }
 }
-#header('Content-Type: application/json; charset=utf8');
+header('Content-Type: application/json; charset=utf8');
 $json = json_encode(array("book"=>$data), JSON_PRETTY_PRINT+JSON_UNESCAPED_UNICODE);
 echo $json;
 mysqli_close($con);
 ?>
-<html>
-<script>
-function search(){
-  var title=document.getElementById("title").value;
-  var url="list.php?title="+title;
-    location.href=url;
-}
-</script>
-<tbody>
-
-</tdody>
-<div>
-<input type="text" id="title" placeholder="검색어를 입력하세요"><button onclick=search()>검색</button>
-<input type="button" value="마이페이지" onclick="location.href='./mypage.php'">
-<input type="button" value="메인" onclick="location.href='main.php'">
-</div>
-</html>

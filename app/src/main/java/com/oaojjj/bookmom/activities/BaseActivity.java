@@ -20,7 +20,6 @@ import com.oaojjj.bookmom.R;
 public class BaseActivity extends AppCompatActivity {
 
     private static String USER_NAME = "default";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +92,8 @@ public class BaseActivity extends AppCompatActivity {
      * @return 로그인 : true / 비로그인 : false
      */
     private boolean isSignIn() {
+        if(!USER_NAME.equals("default"))
+            return true;
         return false;
     }
 }
