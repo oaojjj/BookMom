@@ -1,7 +1,13 @@
-package com.oaojjj.bookmom;
+package com.oaojjj.bookmom.activities;
 
 import android.os.Bundle;
 
+import com.oaojjj.bookmom.R;
+
+//TODO 주은
+/**
+ * 메인페이지
+ */
 public class MainActivity extends BaseActivity {
 
     @Override

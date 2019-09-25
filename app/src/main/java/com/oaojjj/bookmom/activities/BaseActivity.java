@@ -1,4 +1,4 @@
-package com.oaojjj.bookmom;
+package com.oaojjj.bookmom.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.oaojjj.bookmom.R;
 
 /**
  * Toolbar 가 필요한 모든 Activity 는 이것을 상속해야 한다.
@@ -83,6 +85,8 @@ public class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+
+    //TODO 재우형
     /**
      * 사용자 로그인 체크 메소드
      *

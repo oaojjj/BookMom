@@ -1,10 +1,12 @@
-package com.oaojjj.bookmom;
+package com.oaojjj.bookmom.activities;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.oaojjj.bookmom.R;
 
 
 public class BookListActivity extends BaseActivity {

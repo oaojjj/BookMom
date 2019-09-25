@@ -1,8 +1,8 @@
-package com.oaojjj.bookmom;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.oaojjj.bookmom.activities;
 
 import android.os.Bundle;
+
+import com.oaojjj.bookmom.R;
 
 public class MyPageActivity extends BaseActivity {
 
