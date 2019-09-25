@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -63,14 +64,20 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.menu_sign_in:
                 // 로그인 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "로그인", Toast.LENGTH_SHORT).show();
+                Intent login_intent = new Intent(this,SignInActivity.class);
+                    startActivity(login_intent);
                 return true;
             case R.id.menu_sign_up:
                 // 회원가입 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "회원가입", Toast.LENGTH_SHORT).show();
+                Intent register_intent = new Intent(this,SignUpActivity.class);
+                startActivity(register_intent);
                 return true;
             case R.id.menu_my_page:
                 // 마이페이지 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "마이페이지", Toast.LENGTH_SHORT).show();
+                Intent my_intent = new Intent(this,MyPageActivity.class);
+                startActivity(my_intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
