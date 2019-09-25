@@ -19,17 +19,18 @@
 
     <Button
         android:id="@+id/btn_checkID"
-        android:layout_width="74dp"
-        android:layout_height="37dp"
+        android:layout_width="62dp"
+        android:layout_height="36dp"
         android:layout_marginTop="89dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="89dp"
         android:text="중복 확인"
-        android:textSize="12sp"
+        android:textSize="9sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview3"
-        android:layout_marginRight="24dp" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/et_name"
@@ -71,6 +72,7 @@
         app:layout_constraintStart_toStartOf="@+id/et_id"
         app:layout_constraintTop_toBottomOf="@+id/et_id" />
 
+    //제목text도 아이디값이 있어야하나요
     <TextView
         android:id="@+id/textview3"
         android:layout_width="wrap_content"
