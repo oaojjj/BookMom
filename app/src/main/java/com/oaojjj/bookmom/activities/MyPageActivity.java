@@ -4,6 +4,11 @@ import android.os.Bundle;
 
 import com.oaojjj.bookmom.R;
 
+//TODO 주은
+/**
+ * 마이페이지는 생각보다 어려워서 난중에 합시다
+ */
+
 public class MyPageActivity extends BaseActivity {
 
     @Override

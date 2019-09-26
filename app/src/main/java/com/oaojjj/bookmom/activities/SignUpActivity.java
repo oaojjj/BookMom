@@ -15,4 +15,9 @@ public class SignUpActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
     }
+
+    @Override
+    protected boolean useToolbar() {
+        return false;
+    }
 }

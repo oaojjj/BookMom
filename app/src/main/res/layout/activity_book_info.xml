@@ -43,10 +43,11 @@
     <TextView
         android:id="@+id/tv_book_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="사물인터넷을 위한 리눅스 프로그래밍"
         android:textSize="24sp"
@@ -54,24 +55,23 @@
 
     <TextView
         android:id="@+id/tv_book_category"
-        android:layout_weight="2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
         android:text="(게임)"
         android:textSize="16sp" />
 
 
-
-        <Button
-            android:id="@+id/bt_book_rental"
-            android:layout_margin="16dp"
-            android:layout_width="160dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.5"
-            android:text="대여하기"
-            android:textSize="24sp" />
+    <Button
+        android:id="@+id/bt_book_rental"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:text="대여하기"
+        android:textSize="24sp" />
 
 
 </LinearLayout>

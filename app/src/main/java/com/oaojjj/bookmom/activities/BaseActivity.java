@@ -17,10 +17,11 @@ import com.oaojjj.bookmom.R;
 
 /**
  * Toolbar 가 필요한 모든 Activity 는 이것을 상속해야 한다.
-  */
+ */
 public class BaseActivity extends AppCompatActivity {
 
     private static String USER_NAME = "default";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +47,14 @@ public class BaseActivity extends AppCompatActivity {
     // 메뉴 등록
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(isSignIn()&&useToolbar()){
-            getMenuInflater().inflate(R.menu.my_page_menu,menu); // 로그인
-            menu.findItem(R.id.menu_my_page).setTitle(USER_NAME);
-        }
-        else{
-            getMenuInflater().inflate(R.menu.basic_menu,menu); // 비로그인
+        if (useToolbar()) {
+
+            if (isSignIn()) {
+                getMenuInflater().inflate(R.menu.my_page_menu, menu); // 로그인
+                menu.findItem(R.id.menu_my_page).setTitle(USER_NAME);
+            } else {
+                getMenuInflater().inflate(R.menu.basic_menu, menu); // 비로그인
+            }
         }
         return true;
     }
@@ -60,23 +63,23 @@ public class BaseActivity extends AppCompatActivity {
     // 메뉴 클릭 이벤트
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_sign_in:
                 // 로그인 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "로그인", Toast.LENGTH_SHORT).show();
-                Intent login_intent = new Intent(this,SignInActivity.class);
-                    startActivity(login_intent);
+                Intent login_intent = new Intent(this, SignInActivity.class);
+                startActivity(login_intent);
                 return true;
             case R.id.menu_sign_up:
                 // 회원가입 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "회원가입", Toast.LENGTH_SHORT).show();
-                Intent register_intent = new Intent(this,SignUpActivity.class);
+                Intent register_intent = new Intent(this, SignUpActivity.class);
                 startActivity(register_intent);
                 return true;
             case R.id.menu_my_page:
                 // 마이페이지 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "마이페이지", Toast.LENGTH_SHORT).show();
-                Intent my_intent = new Intent(this,MyPageActivity.class);
+                Intent my_intent = new Intent(this, MyPageActivity.class);
                 startActivity(my_intent);
                 return true;
         }
@@ -85,21 +88,23 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * 툴바의 사용 유무
+     *
      * @return 사용 : true / 사용안함 : 오버라이딩해서 false 반환
      */
-    private boolean useToolbar() {
+    protected boolean useToolbar() {
         return true;
     }
 
 
     //TODO 재우형
+
     /**
      * 사용자 로그인 체크 메소드
      *
      * @return 로그인 : true / 비로그인 : false
      */
     private boolean isSignIn() {
-        if(!USER_NAME.equals("default"))
+        if (!USER_NAME.equals("default"))
             return true;
         return false;
     }

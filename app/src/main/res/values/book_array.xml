@@ -3,6 +3,6 @@
     <string-array name="book_list">
         <item>전체</item>
         <item>대여 가능</item>
-        <item>대여 불가</item>
+        <item>대여중</item>
     </string-array>
 </resources>

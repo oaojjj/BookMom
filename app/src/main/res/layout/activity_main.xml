@@ -8,10 +8,6 @@
     android:orientation="vertical"
     android:paddingTop="70dp">
 
-    //서치뷰 id값 똑같이 줘도 되는가요
-
-    //타이틀 아이콘도 id갑 필요한가요
-
     <SearchView
         android:id="@+id/et_search"
         android:layout_width="297dp"
