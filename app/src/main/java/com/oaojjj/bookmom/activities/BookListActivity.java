@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
 
     public static final int REQUEST_CODE = 1000;
 
+    private TextView tvBookCount;
+
     private Spinner spinner;
     private RecyclerView recyclerView;
 
@@ -33,6 +36,8 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
+
+        tvBookCount =findViewById(R.id.tv_book_count);
 
         spinner = findViewById(R.id.sp_book);
 
@@ -51,6 +56,9 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
         dataList.add(new BookItem("자료구조", "프로그래밍", "대여중"));
         dataList.add(new BookItem("미분적분학", "수학", "대여 가능"));
 
+        // 책개수
+        tvBookCount.setText("( "+dataList.size()+" )");
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { // i -> 1 전체, 2 대여가능, 3 대여중
@@ -68,7 +76,6 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
         recyclerView.setAdapter(adapter);
 
         adapter.setOnClickListener(this);
-
 
     }
 

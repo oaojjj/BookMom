@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btMyPage=findViewById(R.id.btn_mypage);
+        btMyPage=findViewById(R.id.btn_my_page);
         btList=findViewById(R.id.btn_list);
 
         btMyPage.setOnClickListener(new View.OnClickListener() {

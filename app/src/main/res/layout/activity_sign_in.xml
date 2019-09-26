@@ -8,13 +8,14 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="121dp"
-        android:layout_height="153dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        android:background="#000000"
+        android:src="@drawable/wap_logo" />
 
     <EditText
         android:id="@+id/et_id"
