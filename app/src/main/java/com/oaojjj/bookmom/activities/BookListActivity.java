@@ -24,10 +24,10 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
     public static final int REQUEST_CODE = 1000;
 
     private Spinner spinner;
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
-    MyRecyclerAdapter adapter;
-    List<BookItem> dataList;
+    private MyRecyclerAdapter adapter;
+    private List<BookItem> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
