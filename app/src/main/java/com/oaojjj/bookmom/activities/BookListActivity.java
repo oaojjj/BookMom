@@ -15,9 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.oaojjj.bookmom.MyRecyclerAdapter;
 import com.oaojjj.bookmom.R;
 import com.oaojjj.bookmom.models.BookItem;
+import com.oaojjj.bookmom.retrofit.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.MyRecyclerViewClickListener {
@@ -63,7 +69,18 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { // i -> 1 전체, 2 대여가능, 3 대여중
                 //TODO 재우형 상황에 맞는 아이템이 나오도록 구현
+                Call<ResponseBody> check= RetrofitClient.getInstance().getApi().list("","1");
+                check.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Log.d("test",response.body().toString());
+                    }
 
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
                 Toast.makeText(BookListActivity.this, String.valueOf(adapterView.getItemAtPosition(i)), Toast.LENGTH_SHORT).show();
             }
             @Override
