@@ -17,6 +17,11 @@ import com.oaojjj.bookmom.R;
 import com.oaojjj.bookmom.models.BookItem;
 import com.oaojjj.bookmom.retrofit.RetrofitClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +29,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.MyRecyclerViewClickListener {
@@ -36,7 +42,7 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
     private RecyclerView recyclerView;
 
     private MyRecyclerAdapter adapter;
-    private List<BookItem> dataList;
+    List<BookItem> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,27 +59,38 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
         recyclerView.setLayoutManager(layoutManager);
 
         dataList = new ArrayList<>();
-
-
-        // 임시 데이터
-        dataList.add(new BookItem("리눅스 프로그래밍", "리눅스", "대여 가능"));
-        dataList.add(new BookItem("c언어 프로그래밍", "프로그래밍 언어", "대여중"));
-        dataList.add(new BookItem("자바 프로그래밍", "프로그래밍 언어", "대여중"));
-        dataList.add(new BookItem("자료구조", "프로그래밍", "대여중"));
-        dataList.add(new BookItem("미분적분학", "수학", "대여 가능"));
-
-        // 책개수
-        tvBookCount.setText("( "+dataList.size()+" )");
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { // i -> 1 전체, 2 대여가능, 3 대여중
+            public void onItemSelected(final AdapterView<?> adapterView, View view, int i, long l) { // i -> 0 전체, 1 대여가능, 2 대여중
                 //TODO 재우형 상황에 맞는 아이템이 나오도록 구현
-                Call<ResponseBody> check= RetrofitClient.getInstance().getApi().list("","1");
+                dataList.clear();
+                Call<ResponseBody> check= RetrofitClient.getInstance().getApi().list("",i);
                 check.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Log.d("test",response.body().toString());
+                        try{
+
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+
+                            JSONArray bookArray = jsonObject.getJSONArray("book");
+
+                            for(int i=0; i<bookArray.length(); i++) {
+                                JSONObject bookObject = bookArray.getJSONObject(i);
+                                BookItem book;
+                                if( bookObject.getString("available").contentEquals("0"))
+                                    book= new BookItem(bookObject.getString("title"), bookObject.getString("kind"), "대여가능",bookObject.getString("bno"));
+                                else
+                                    book= new BookItem(bookObject.getString("title"), bookObject.getString("kind"), "대여중",bookObject.getString("bno"));
+
+                               dataList.add(book);
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        tvBookCount.setText("( " + dataList.size() + " )");
+                        adapter = new MyRecyclerAdapter(dataList);
+                        adapter.setOnClickListener(BookListActivity.this);
+                        recyclerView.setAdapter(adapter);
                     }
 
                     @Override
@@ -88,18 +105,13 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
 
             }
         });
-
-        adapter = new MyRecyclerAdapter(dataList);
-        recyclerView.setAdapter(adapter);
-
-        adapter.setOnClickListener(this);
-
     }
 
     // Item을 클릭 했을 때
     @Override
     public void onItemClicked(int position) {
         Intent intent = new Intent(BookListActivity.this,BookInfoActivity.class);
+        intent.putExtra("bno",dataList.get(position).getbno());
         startActivityForResult(intent, REQUEST_CODE);
     }
 }
