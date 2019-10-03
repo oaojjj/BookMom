@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -20,8 +21,12 @@ import com.oaojjj.bookmom.R;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    public static SharedPreferences spfUser;
+    public static SharedPreferences.Editor spfEditor;
+
     private static String USER_NAME = "default";
 
+    //TODO 재우형 젤 처음 시작되는 콜백 여기서 sharedpreferences로 유저 네임 겟해서 USER_NAME에 저장
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,16 +45,16 @@ public class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.basic_toolbar);
 
         setSupportActionBar(toolbar);
-        setTitle("북 맘");
+        setTitle("북맘");
     }
 
     // 메뉴 등록
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (useToolbar()) {
-            if (isSignIn()) {
+            if (!isSignIn()) {
                 getMenuInflater().inflate(R.menu.my_page_menu, menu); // 로그인
-                menu.findItem(R.id.menu_my_page).setTitle(USER_NAME);
+                menu.findItem(R.id.menu_user_page).setTitle(USER_NAME);
             } else {
                 getMenuInflater().inflate(R.menu.basic_menu, menu); // 비로그인
             }
@@ -65,20 +70,30 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.menu_sign_in:
                 // 로그인 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "로그인", Toast.LENGTH_SHORT).show();
-                Intent login_intent = new Intent(this, SignInActivity.class);
-                startActivity(login_intent);
+                Intent loginIntent = new Intent(this, SignInActivity.class);
+                startActivity(loginIntent);
                 return true;
             case R.id.menu_sign_up:
                 // 회원가입 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "회원가입", Toast.LENGTH_SHORT).show();
-                Intent register_intent = new Intent(this, SignUpActivity.class);
-                startActivity(register_intent);
+                Intent registerIntent = new Intent(this, SignUpActivity.class);
+                startActivity(registerIntent);
                 return true;
             case R.id.menu_my_page:
-                // 마이페이지 메뉴 클릭 이벤트 구현
                 Toast.makeText(getApplicationContext(), "마이페이지", Toast.LENGTH_SHORT).show();
-                Intent my_intent = new Intent(this, MyPageActivity.class);
-                startActivity(my_intent);
+                Intent myPageIntent = new Intent(this,MyPageActivity.class);
+                startActivity(myPageIntent);
+                return true;
+            case R.id.menu_logout:
+                //TODO 재우형 로그아웃에 대한 구현
+                spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
+                spfEditor = spfUser.edit();
+                if(!(spfUser.getString("userID","null").equals("null"))){
+                    spfEditor.remove("userID");
+                    spfEditor.commit();
+                    Toast.makeText(this, "자동로그인 취소", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -92,9 +107,6 @@ public class BaseActivity extends AppCompatActivity {
     protected boolean useToolbar() {
         return true;
     }
-
-
-    //TODO 재우형
 
     /**
      * 사용자 로그인 체크 메소드

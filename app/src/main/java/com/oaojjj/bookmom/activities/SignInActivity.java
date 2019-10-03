@@ -35,11 +35,8 @@ public class SignInActivity extends BaseActivity{
     private CheckBox chAutoSignIn;
     private Button btSignIn;
 
-    SharedPreferences spfUser;
-    SharedPreferences.Editor spfEditor;
-
-    String userID;
-    String userPWD;
+    public static String userID;
+    private String userPWD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
