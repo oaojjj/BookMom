@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -24,13 +25,20 @@ public class BaseActivity extends AppCompatActivity {
     public static SharedPreferences spfUser;
     public static SharedPreferences.Editor spfEditor;
 
-    private static String USER_NAME = "default";
+    public static String USER_NAME = "";
+    public static String USER_ID="";
+    public static String USER_PASSWORD="";
 
-    //TODO 재우형 젤 처음 시작되는 콜백 여기서 sharedpreferences로 유저 네임 겟해서 USER_NAME에 저장
+
+    //TODO 재우형 젤 처음 시작되는 콜백 여기서 sharedpreferences로 유저 아이디 겟해서 USER_ID 에 저장
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_toolbar);
+        // 원래는 유저 이름
+        spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
+        spfEditor = spfUser.edit();
+        spfUser.getString(USER_NAME,"");
     }
 
 
@@ -52,7 +60,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (useToolbar()) {
-            if (!isSignIn()) {
+            if (isSignIn()) {
                 getMenuInflater().inflate(R.menu.my_page_menu, menu); // 로그인
                 menu.findItem(R.id.menu_user_page).setTitle(USER_NAME);
             } else {
@@ -86,9 +94,7 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_logout:
                 //TODO 재우형 로그아웃에 대한 구현
-                spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
-                spfEditor = spfUser.edit();
-                if(!(spfUser.getString("userID","null").equals("null"))){
+                if(isSignIn()){
                     spfEditor.remove("userID");
                     spfEditor.commit();
                     Toast.makeText(this, "자동로그인 취소", Toast.LENGTH_SHORT).show();
@@ -116,12 +122,15 @@ public class BaseActivity extends AppCompatActivity {
     String getUserName(){
         return USER_NAME;
     }
+
     void setUserName(String name){
         this.USER_NAME=name;
     }
+
     boolean isSignIn() {
-        if (!USER_NAME.equals("default"))
+        if (USER_ID.isEmpty())
+            return false;
+        else
             return true;
-        return false;
     }
 }

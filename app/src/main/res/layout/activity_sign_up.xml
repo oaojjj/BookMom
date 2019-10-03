@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="등록"
-        app:layout_constraintEnd_toEndOf="@+id/et_passwd"
+        app:layout_constraintEnd_toEndOf="@+id/et_password"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="@+id/et_passwd"
-        app:layout_constraintTop_toBottomOf="@+id/et_passwd" />
+        app:layout_constraintStart_toStartOf="@+id/et_password"
+        app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <Button
         android:id="@+id/btn_checkID"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <EditText
-        android:id="@+id/et_passwd"
+        android:id="@+id/et_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="@+id/et_id"
         app:layout_constraintTop_toBottomOf="@+id/et_id" />
 
-    //제목text도 아이디값이 있어야하나요
+
     <TextView
         android:id="@+id/textview3"
         android:layout_width="wrap_content"

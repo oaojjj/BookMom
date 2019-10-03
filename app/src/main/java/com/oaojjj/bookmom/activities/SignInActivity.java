@@ -30,20 +30,18 @@ public class SignInActivity extends BaseActivity{
 
     final static private String SIGN_IN_CHECK = "1";
 
-    private EditText etUserId;
+    private EditText etUserID;
     private EditText etUserPWD;
     private CheckBox chAutoSignIn;
     private Button btSignIn;
 
-    public static String userID;
-    private String userPWD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        etUserId = findViewById(R.id.et_id);
+        etUserID = findViewById(R.id.et_id);
         etUserPWD = findViewById(R.id.et_pwd);
         chAutoSignIn = findViewById(R.id.cb_auto_sign_in);
         btSignIn = findViewById(R.id.btn_login);
@@ -52,21 +50,21 @@ public class SignInActivity extends BaseActivity{
         btSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userID = etUserId.getText().toString().trim();
-                userPWD = etUserPWD.getText().toString().trim();
+                USER_ID = etUserID.getText().toString().trim();
+                USER_PASSWORD = etUserPWD.getText().toString().trim();
 
-                if (userID.isEmpty()){
-                    etUserId.setError("아이디를 입력하세요");
-                    etUserId.requestFocus();
+                if (USER_ID.isEmpty()){
+                    etUserID.setError("아이디를 입력하세요");
+                    etUserID.requestFocus();
                     return;
                 }
-                if(userPWD.isEmpty()){
+                if(USER_PASSWORD.isEmpty()){
                     etUserPWD.setError("비밀번호를 입력하세요");
                     etUserPWD.requestFocus();
                     return;
                 }
 
-                Call<ResponseBody> signIn = RetrofitClient.getInstance().getApi().login(userID, userPWD); // id , password 입력받은값 순서대로 넣기 로그인 버튼 눌럿을때 수행
+                Call<ResponseBody> signIn = RetrofitClient.getInstance().getApi().login(USER_ID, USER_PASSWORD); // id , password 입력받은값 순서대로 넣기 로그인 버튼 눌럿을때 수행
 
                 signIn.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -83,7 +81,7 @@ public class SignInActivity extends BaseActivity{
                                 if(chAutoSignIn.isChecked()){
                                     spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
                                     spfEditor = spfUser.edit();
-                                    spfEditor.putString(userID,"userID");
+                                    spfEditor.putString(USER_ID,"userID");
                                     spfEditor.commit();
                                 }
 

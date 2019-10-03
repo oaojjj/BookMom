@@ -64,7 +64,7 @@ public class BookInfoActivity extends BaseActivity {
                     tvTitle.setText(bookObject.getString("title"));
                     tvCategory.setText(bookObject.getString("kind"));
                     rental=bookObject.getString("available");
-                    if(!isSignIn()||rental.contentEquals("1")){
+                    if(isSignIn()||rental.contentEquals("1")){
                         btBookRental.setEnabled(false);
                     }
                 }catch (Exception e) {

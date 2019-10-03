@@ -2,6 +2,7 @@ package com.oaojjj.bookmom.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -27,6 +28,10 @@ public class MainActivity extends BaseActivity {
 
         btMyPage=findViewById(R.id.btn_my_page);
         btList=findViewById(R.id.btn_list);
+
+        if(USER_ID.isEmpty()){
+            Log.d("USER_ID_TEST","TEST");
+        }
 
         btMyPage.setOnClickListener(new View.OnClickListener() {
             @Override
