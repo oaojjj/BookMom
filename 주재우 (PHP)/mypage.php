@@ -1,7 +1,6 @@
 <?php
 include ('dbcon.php');
-$id=$_SESSION['id'];
-echo"$id 님 로그인 되셨습니다<br />\n";
+$id=$_GET['id'];
 $mysql="select * from rental where id='$id'";
 $result=mysqli_query($con,$mysql);
 $count=mysqli_num_rows($result);

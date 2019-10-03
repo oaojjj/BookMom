@@ -1,6 +1,6 @@
 <?php
 include ('dbcon.php');
-$id=$_SESSION['id'];
+$id=$_GET['id'];
 $bno=$_GET['bno'];
 $sql1="select * from book where bno='$bno'";
 $result=mysqli_query($con,$sql1);

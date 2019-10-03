@@ -1,11 +1,5 @@
 <?php
 include ('dbcon.php');
-$check;
-if($_SESSION){
-$id=$_SESSION['id'];$check=0;}
-else{
-   $check=1;
-}
 $bno=$_GET['bno'];
 $data=array();
 $mysql="select * from book where bno='$bno'";

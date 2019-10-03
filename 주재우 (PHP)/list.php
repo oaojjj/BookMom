@@ -1,20 +1,34 @@
 <?php
 include ('dbcon.php');
-if($_SESSION){
-$id=$_SESSION['id'];}
-else{
-  ?><html>
-  <input type="button" value="로그인" onclick="location.href='./login.php'">
-  </html><?php
-}
+$id=$_GET['id'];
 $title=$_GET['title'];
+$option=$_GET['option'];
+$title="";
 $data=array();
 if($title==""||$title==null){
+  if($option==0){
 $mysql="select * from book";
 $result=mysqli_query($con,$mysql);
 while($row=mysqli_fetch_array($result)){
 extract($row);
 array_push($data,array('bno'=>$row['bno'],'title'=>$row['title'],'kind'=>$row['kind'],'available'=>$row['available']));
+}}
+else if($option==1){
+  $mysql="select * from book where available='0'";
+  $result=mysqli_query($con,$mysql);
+  while($row=mysqli_fetch_array($result)){
+  extract($row);
+  array_push($data,array('bno'=>$row['bno'],'title'=>$row['title'],'kind'=>$row['kind'],'available'=>$row['available']));
+  }
+}
+else{
+  $mysql="select * from book where available='1'";
+  $result=mysqli_query($con,$mysql);
+  while($row=mysqli_fetch_array($result)){
+  extract($row);
+  array_push($data,array('bno'=>$row['bno'],'title'=>$row['title'],'kind'=>$row['kind'],'available'=>$row['available']));
+  }
+
 }
 }
 else{

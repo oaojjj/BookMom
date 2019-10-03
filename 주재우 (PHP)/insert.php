@@ -5,9 +5,8 @@
 
     include('dbcon.php');
 
-
-    if( ($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit']))
-    {
+    #if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit']))
+    #{
         $id=$_POST['id'];
         $name=$_POST['name'];
         $password=md5($_POST['password']);
@@ -21,5 +20,5 @@
     else echo "0";
     mysqli_close($con);
         }
-      }
+      #}
 ?>

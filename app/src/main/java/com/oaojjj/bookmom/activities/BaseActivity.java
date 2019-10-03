@@ -26,6 +26,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_toolbar);
+        USER_NAME="wnwodn4293";
 
     }
 
@@ -103,7 +104,10 @@ public class BaseActivity extends AppCompatActivity {
      *
      * @return 로그인 : true / 비로그인 : false
      */
-    private boolean isSignIn() {
+    String getUserName(){
+        return USER_NAME;
+    }
+    boolean isSignIn() {
         if (!USER_NAME.equals("default"))
             return true;
         return false;

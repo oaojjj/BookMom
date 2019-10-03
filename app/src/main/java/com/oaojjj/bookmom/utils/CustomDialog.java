@@ -26,7 +26,7 @@ public class CustomDialog extends Dialog {
     private DatePicker datePicker;
 
     private Calendar calendar;
-    private String mTitle;
+    private String mTitle,mname;
 
 
     private String resultDate;
@@ -36,10 +36,11 @@ public class CustomDialog extends Dialog {
 
     private int year;
 
-    public CustomDialog(@NonNull Context context, String title) {
+    public CustomDialog(@NonNull Context context, String title,String user_name) {
         super(context);
         mContext = context;
         mTitle = title;
+        mname=user_name;
     }
 
     public void setListener(View.OnClickListener mPositiveListener, View.OnClickListener mNegativeListener) {
@@ -69,6 +70,7 @@ public class CustomDialog extends Dialog {
         datePicker = findViewById(R.id.dp_date);
 
         title.setText(mTitle);
+        userName.setText(mname);
 
         // 현재 년도 가져오기
         calendar = Calendar.getInstance();

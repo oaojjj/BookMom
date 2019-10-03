@@ -2,8 +2,10 @@ package com.oaojjj.bookmom.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ public class BookInfoActivity extends BaseActivity {
     private ImageButton ibBookMark;
 
     private CustomDialog customDialog;
+    private String rental,bno;
 
     private View.OnClickListener mPositiveListener;
     private View.OnClickListener mNegativeListener;
@@ -42,13 +45,12 @@ public class BookInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
-
         tvTitle = findViewById(R.id.tv_book_title);
         tvCategory = findViewById(R.id.tv_book_category);
         btBookRental = findViewById(R.id.bt_book_rental);
         ibBookMark = findViewById(R.id.ib_book_mark); // WebView 구현해서 책 제목을 넘겨서 책에 대한 정보페이지를 웹으로 나타낸다.
         Intent intent = getIntent();
-        String bno=intent.getExtras().getString("bno");
+        bno=intent.getExtras().getString("bno");
         Call<ResponseBody> check= RetrofitClient.getInstance().getApi().view(bno);
         check.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -61,6 +63,10 @@ public class BookInfoActivity extends BaseActivity {
                     JSONObject bookObject = bookArray.getJSONObject(0);
                     tvTitle.setText(bookObject.getString("title"));
                     tvCategory.setText(bookObject.getString("kind"));
+                    rental=bookObject.getString("available");
+                    if(!isSignIn()||rental.contentEquals("1")){
+                        btBookRental.setEnabled(false);
+                    }
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -87,7 +93,7 @@ public class BookInfoActivity extends BaseActivity {
         btBookRental.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customDialog = new CustomDialog(BookInfoActivity.this, tvTitle.getText().toString());
+                customDialog = new CustomDialog(BookInfoActivity.this, tvTitle.getText().toString(),getUserName());
                 customDialog.setListener(mPositiveListener, mNegativeListener);
                 customDialog.show();
             }
@@ -98,6 +104,19 @@ public class BookInfoActivity extends BaseActivity {
         mPositiveListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Call<ResponseBody> reg= RetrofitClient.getInstance().getApi().r_reg(bno,getUserName(),customDialog.getResultDate());
+                reg.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        String a=response.body().toString();
+                        if(a.contentEquals("0"))
+                            Log.d("T", "onResponse: ");
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
                 Toast.makeText(BookInfoActivity.this, "대여 완료!", Toast.LENGTH_SHORT).show();
                 customDialog.dismiss();
             }
