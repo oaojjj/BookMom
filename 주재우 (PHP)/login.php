@@ -7,11 +7,10 @@ $sql="SELECT * FROM user WHERE id='$id' and password='$pwd'";
 $result=mysqli_query($con,$sql);
 $count=mysqli_num_rows($result);
 if($count==1){
-  $_SESSION['id']=$id;
-  echo "0"; // 0이면 로그인 성공
+  echo "1"; // 1이면 로그인 성공
 }
 else {
-  echo "1"; //1 이면 로그인 실패
+  echo "0"; //0 이면 로그인 실패
 }
 }
 mysqli_close($con);

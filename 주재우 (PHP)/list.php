@@ -1,6 +1,5 @@
 <?php
 include ('dbcon.php');
-$id=$_GET['id'];
 $title=$_GET['title'];
 $option=$_GET['option'];
 $title="";
