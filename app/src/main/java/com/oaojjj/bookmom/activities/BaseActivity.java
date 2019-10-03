@@ -40,7 +40,7 @@ public class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.basic_toolbar);
 
         setSupportActionBar(toolbar);
-        setTitle("W A P");
+        setTitle("북 맘");
     }
 
     // 메뉴 등록
