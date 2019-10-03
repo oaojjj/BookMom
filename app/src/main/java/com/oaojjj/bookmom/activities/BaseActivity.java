@@ -47,7 +47,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (useToolbar()) {
-
             if (isSignIn()) {
                 getMenuInflater().inflate(R.menu.my_page_menu, menu); // 로그인
                 menu.findItem(R.id.menu_my_page).setTitle(USER_NAME);
@@ -104,6 +103,9 @@ public class BaseActivity extends AppCompatActivity {
      */
     String getUserName(){
         return USER_NAME;
+    }
+    void setUserName(String name){
+        this.USER_NAME=name;
     }
     boolean isSignIn() {
         if (!USER_NAME.equals("default"))
