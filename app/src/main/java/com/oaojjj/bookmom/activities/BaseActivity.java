@@ -26,8 +26,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_toolbar);
-        USER_NAME="wnwodn4293";
-
     }
 
 

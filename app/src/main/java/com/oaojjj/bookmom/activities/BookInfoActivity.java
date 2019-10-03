@@ -118,6 +118,7 @@ public class BookInfoActivity extends BaseActivity {
                     }
                 });
                 Toast.makeText(BookInfoActivity.this, "대여 완료!", Toast.LENGTH_SHORT).show();
+                btBookRental.setEnabled(false);
                 customDialog.dismiss();
             }
         };
@@ -132,4 +133,11 @@ public class BookInfoActivity extends BaseActivity {
         };
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
+

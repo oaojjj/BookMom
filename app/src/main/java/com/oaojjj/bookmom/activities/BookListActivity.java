@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,6 +92,7 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
                         adapter = new MyRecyclerAdapter(dataList);
                         adapter.setOnClickListener(BookListActivity.this);
                         recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -106,12 +108,18 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
             }
         });
     }
-
     // Item을 클릭 했을 때
     @Override
     public void onItemClicked(int position) {
         Intent intent = new Intent(BookListActivity.this,BookInfoActivity.class);
         intent.putExtra("bno",dataList.get(position).getbno());
         startActivityForResult(intent, REQUEST_CODE);
+    }
+    @Override
+    public void onActivityResult(int REQUEST_CODE,int resultCode,Intent data){
+        super.onActivityResult(REQUEST_CODE,resultCode,data);
+        Intent intent =getIntent();
+        finish();
+        startActivity(intent);
     }
 }
