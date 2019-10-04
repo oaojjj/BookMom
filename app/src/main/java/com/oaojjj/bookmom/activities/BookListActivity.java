@@ -41,8 +41,8 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
 
     private Spinner spinner;
     private RecyclerView recyclerView;
-
     private MyRecyclerAdapter adapter;
+
     List<BookItem> dataList;
 
     @Override
@@ -50,7 +50,10 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
 
-        tvBookCount =findViewById(R.id.tv_book_count);
+
+        adapter = new MyRecyclerAdapter(getApplicationContext());
+
+        tvBookCount = findViewById(R.id.tv_book_count);
 
         spinner = findViewById(R.id.sp_book);
 
@@ -63,29 +66,28 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> adapterView, View view, int i, long l) { // i -> 0 전체, 1 대여가능, 2 대여중
-                //TODO 재우형 상황에 맞는 아이템이 나오도록 구현
                 dataList.clear();
-                Call<ResponseBody> check= RetrofitClient.getInstance().getApi().list("",i);
+                Call<ResponseBody> check = RetrofitClient.getInstance().getApi().list("", i);
                 check.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try{
+                        try {
 
                             JSONObject jsonObject = new JSONObject(response.body().string());
 
                             JSONArray bookArray = jsonObject.getJSONArray("book");
 
-                            for(int i=0; i<bookArray.length(); i++) {
+                            for (int i = 0; i < bookArray.length(); i++) {
                                 JSONObject bookObject = bookArray.getJSONObject(i);
                                 BookItem book;
-                                if( bookObject.getString("available").contentEquals("0"))
-                                    book= new BookItem(bookObject.getString("title"), bookObject.getString("kind"), "대여가능",bookObject.getString("bno"));
+                                if (bookObject.getString("available").contentEquals("0"))
+                                    book = new BookItem(bookObject.getString("title"), bookObject.getString("kind"), "대여가능", bookObject.getString("bno"));
                                 else
-                                    book= new BookItem(bookObject.getString("title"), bookObject.getString("kind"), "대여중",bookObject.getString("bno"));
+                                    book = new BookItem(bookObject.getString("title"), bookObject.getString("kind"), "대여중", bookObject.getString("bno"));
 
-                               dataList.add(book);
+                                dataList.add(book);
                             }
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         tvBookCount.setText("( " + dataList.size() + " )");
@@ -102,23 +104,26 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
                 });
                 Toast.makeText(BookListActivity.this, String.valueOf(adapterView.getItemAtPosition(i)), Toast.LENGTH_SHORT).show();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
     }
+
     // Item을 클릭 했을 때
     @Override
     public void onItemClicked(int position) {
-        Intent intent = new Intent(BookListActivity.this,BookInfoActivity.class);
-        intent.putExtra("bno",dataList.get(position).getbno());
+        Intent intent = new Intent(BookListActivity.this, BookInfoActivity.class);
+        intent.putExtra("bno", dataList.get(position).getbno());
         startActivityForResult(intent, REQUEST_CODE);
     }
+
     @Override
-    public void onActivityResult(int REQUEST_CODE,int resultCode,Intent data){
-        super.onActivityResult(REQUEST_CODE,resultCode,data);
-        Intent intent =getIntent();
+    public void onActivityResult(int REQUEST_CODE, int resultCode, Intent data) {
+        super.onActivityResult(REQUEST_CODE, resultCode, data);
+        Intent intent = getIntent();
         finish();
         startActivity(intent);
     }

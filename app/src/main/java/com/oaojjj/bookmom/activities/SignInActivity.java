@@ -85,9 +85,7 @@ public class SignInActivity extends BaseActivity{
                                     spfEditor.commit();
                                 }
 
-                                //TODO 재우형 로그인 성공했을 때 사용자의 이름이 같이 넘어오게 만들어야 할듯..
-                                //사용자 이름도 sheared 로 관리하는게 편할듯
-                                setUserName("사용자 이름"); //id값 입력
+                                setUserName(USER_NAME); //id값 입력
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);

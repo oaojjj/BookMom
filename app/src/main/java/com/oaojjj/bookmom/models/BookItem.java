@@ -1,10 +1,5 @@
 package com.oaojjj.bookmom.models;
 
-//TODO 재우형
-
-/**
- *
- */
 public class BookItem {
     private String title;
     private String category;

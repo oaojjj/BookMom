@@ -15,11 +15,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//TODO 주은
-
-/**
- * 회원가입 화면
- */
 public class SignUpActivity extends BaseActivity {
 
     private EditText etUserName;
@@ -80,6 +75,8 @@ public class SignUpActivity extends BaseActivity {
                 if (CHECKED_ID) {
                     // 회원가입 눌렀을때 실행 되게하기 id password, name 순서대로 입력받은 값을 넣고,chkid 값이 true가 되면 회원가입 완료
                     Call<ResponseBody> signUp = RetrofitClient.getInstance().getApi().insert(USER_ID, USER_PASSWORD, USER_NAME);
+                    spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
+                    spfEditor = spfUser.edit();
                 }
                 else{
                     Toast.makeText(SignUpActivity.this, "중복되는 id가 존재합니다.", Toast.LENGTH_SHORT).show();

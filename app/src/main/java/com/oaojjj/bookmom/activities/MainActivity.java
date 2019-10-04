@@ -8,14 +8,6 @@ import android.widget.ImageButton;
 
 import com.oaojjj.bookmom.R;
 
-//TODO 주은
-/**
- * 메인페이지
- *
- * 자바코드에서는 변수명 쓸 때 camelCase 로 쓰기
- * xml 에서는 소문자만 쓰기
- * 해보다가 모르는건 TODO달고 주석처리
- * */
 public class MainActivity extends BaseActivity {
 
     private ImageButton btMyPage;

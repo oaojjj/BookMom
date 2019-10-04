@@ -29,8 +29,6 @@ public class BaseActivity extends AppCompatActivity {
     public static String USER_ID="";
     public static String USER_PASSWORD="";
 
-
-    //TODO 재우형 젤 처음 시작되는 콜백 여기서 sharedpreferences로 유저 아이디 겟해서 USER_ID 에 저장
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +36,9 @@ public class BaseActivity extends AppCompatActivity {
         // 원래는 유저 이름
         spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
         spfEditor = spfUser.edit();
-        spfUser.getString(USER_NAME,"");
+        spfUser.getString(USER_ID,"");
+
+        spfUser.getString(USER_NAME," ");
     }
 
 
@@ -93,7 +93,6 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(myPageIntent);
                 return true;
             case R.id.menu_logout:
-                //TODO 재우형 로그아웃에 대한 구현
                 if(isSignIn()){
                     spfEditor.remove("userID");
                     spfEditor.commit();

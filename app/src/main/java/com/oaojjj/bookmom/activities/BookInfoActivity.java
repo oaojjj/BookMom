@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oaojjj.bookmom.MyRecyclerAdapter;
 import com.oaojjj.bookmom.R;
-import com.oaojjj.bookmom.models.BookItem;
+import com.oaojjj.bookmom.models.BookMarkDB;
 import com.oaojjj.bookmom.retrofit.RetrofitClient;
 import com.oaojjj.bookmom.utils.CustomDialog;
 
@@ -26,36 +24,48 @@ import retrofit2.Response;
 
 public class BookInfoActivity extends BaseActivity {
 
-    private TextView tvTitle,tvCategory;
-    private Button btBookRental;
+    private TextView tvTitle, tvCategory;
+    private Button btBookRental, btBookDetail;
     private ImageButton ibBookMark;
 
     private CustomDialog customDialog;
-    private String rental,bno;
+    private String rental, bno;
 
     private View.OnClickListener mPositiveListener;
     private View.OnClickListener mNegativeListener;
 
-    // TODO 재우형
-    // 북마크 추가 -> true , 북마크 없음 -> false
-    // 이 변수에 사용자 북마크 정보를 저장아니면 따로 모델클래스 만들어도 상관 없음
-    boolean CHECK_BOOK_MARK = false;
+    BookMarkDB bookMarkDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
+
+        bookMarkDB = new BookMarkDB(getApplicationContext());
+        if(bookMarkDB.isBookMark()){
+            ibBookMark.setSelected(true);
+        }
+        else{
+            ibBookMark.setSelected(false);
+        }
+
+
         tvTitle = findViewById(R.id.tv_book_title);
         tvCategory = findViewById(R.id.tv_book_category);
+        ibBookMark = findViewById(R.id.ib_book_mark);
         btBookRental = findViewById(R.id.bt_book_rental);
-        ibBookMark = findViewById(R.id.ib_book_mark); // WebView 구현해서 책 제목을 넘겨서 책에 대한 정보페이지를 웹으로 나타낸다.
+
+        // TODO 재우형 상세정보 보기에 웹뷰연동?
+        // WebView 구현해서 책 제목을 넘겨서 책에 대한 정보페이지를 웹으로 나타낸다.
+        btBookDetail = findViewById(R.id.bt_book_detail);
+
         Intent intent = getIntent();
-        bno=intent.getExtras().getString("bno");
-        Call<ResponseBody> check= RetrofitClient.getInstance().getApi().view(bno);
+        bno = intent.getExtras().getString("bno");
+        Call<ResponseBody> check = RetrofitClient.getInstance().getApi().view(bno);
         check.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try{
+                try {
 
                     JSONObject jsonObject = new JSONObject(response.body().string());
 
@@ -63,11 +73,11 @@ public class BookInfoActivity extends BaseActivity {
                     JSONObject bookObject = bookArray.getJSONObject(0);
                     tvTitle.setText(bookObject.getString("title"));
                     tvCategory.setText(bookObject.getString("kind"));
-                    rental=bookObject.getString("available");
-                    if(isSignIn()||rental.contentEquals("1")){
+                    rental = bookObject.getString("available");
+                    if (isSignIn() || rental.contentEquals("1")) {
                         btBookRental.setEnabled(false);
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -77,14 +87,19 @@ public class BookInfoActivity extends BaseActivity {
 
             }
         });
-        // 북마크 버튼
+
+        //TODO 재우형 이것도 테스트가 불가능해서 테스트좀 해줘용~ 파라미터는 전부 책 제목
         ibBookMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CHECK_BOOK_MARK) {
-                    ibBookMark.setSelected(true);
+                // 반대로 이미 북마크에 추가 되었는데 눌렀을때 버튼 배경이 바뀌면서 북마크 remove 호출
+                // 버튼 배경은 book_mark_background 에 정의됨
+                if (bookMarkDB.isBookMark()) {
+                    ibBookMark.setSelected(false); // 클릭 안되었을 때는 빈배경
+                    bookMarkDB.removeBookMark(); // 북마크 삭제
                 } else {
-                    ibBookMark.setSelected(false);
+                    ibBookMark.setSelected(true); // 클릭 되었을 때는 검은색 배경
+                    bookMarkDB.addBookMark(); // 북마크 추가
                 }
             }
         });
@@ -93,7 +108,7 @@ public class BookInfoActivity extends BaseActivity {
         btBookRental.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customDialog = new CustomDialog(BookInfoActivity.this, tvTitle.getText().toString(),getUserName());
+                customDialog = new CustomDialog(BookInfoActivity.this, tvTitle.getText().toString(), getUserName());
                 customDialog.setListener(mPositiveListener, mNegativeListener);
                 customDialog.show();
             }
@@ -104,14 +119,15 @@ public class BookInfoActivity extends BaseActivity {
         mPositiveListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<ResponseBody> reg= RetrofitClient.getInstance().getApi().r_reg(bno,getUserName(),customDialog.getResultDate());
+                Call<ResponseBody> reg = RetrofitClient.getInstance().getApi().r_reg(bno, getUserName(), customDialog.getResultDate());
                 reg.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        String a=response.body().toString();
-                        if(a.contentEquals("0"))
+                        String a = response.body().toString();
+                        if (a.contentEquals("0"))
                             Log.d("T", "onResponse: ");
                     }
+
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
 
