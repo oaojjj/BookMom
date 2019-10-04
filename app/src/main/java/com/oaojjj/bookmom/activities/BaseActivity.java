@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -100,8 +99,13 @@ public class BaseActivity extends AppCompatActivity {
                     Toast.makeText(this, "자동로그인 취소", Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
+                USER_ID="";
+                Intent i=new Intent(BaseActivity.this,MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                finish();
+                startActivity(i);
                 return true;
-        }
+    }
         return super.onOptionsItemSelected(item);
     }
 
