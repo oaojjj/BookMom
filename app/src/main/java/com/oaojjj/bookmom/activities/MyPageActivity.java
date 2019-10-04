@@ -19,4 +19,9 @@ public class MyPageActivity extends BaseActivity {
         tvMyRental = findViewById(R.id.tv_my_rental);
 
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

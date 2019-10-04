@@ -43,4 +43,11 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+    @Override
+    public void onActivityResult(int REQUEST_CODE,int resultCode,Intent data){
+        super.onActivityResult(REQUEST_CODE,resultCode,data);
+        Intent intent =getIntent();
+        finish();
+        startActivity(intent);
+    }
 }

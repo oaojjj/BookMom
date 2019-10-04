@@ -73,8 +73,13 @@ public class BookInfoActivity extends BaseActivity {
                     JSONObject bookObject = bookArray.getJSONObject(0);
                     tvTitle.setText(bookObject.getString("title"));
                     tvCategory.setText(bookObject.getString("kind"));
+<<<<<<< HEAD
                     rental = bookObject.getString("available");
                     if (isSignIn() || rental.contentEquals("1")) {
+=======
+                    rental=bookObject.getString("available");
+                    if(!isSignIn()||rental.contentEquals("1")){
+>>>>>>> 6b7654934872fafe42bc1efdbed225efb8157e28
                         btBookRental.setEnabled(false);
                     }
                 } catch (Exception e) {

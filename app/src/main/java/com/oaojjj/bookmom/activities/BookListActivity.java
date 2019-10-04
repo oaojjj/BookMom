@@ -127,4 +127,9 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
         finish();
         startActivity(intent);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

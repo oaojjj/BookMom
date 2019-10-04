@@ -70,7 +70,11 @@ public class SignInActivity extends BaseActivity{
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
-                            String flag = response.body().string();
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+
+                            JSONArray bookArray = jsonObject.getJSONArray("name");
+                            JSONObject userObject = bookArray.getJSONObject(0);
+                            String flag = userObject.getString("flag");
                             Log.d("SignActivity_flag", flag);
                             // flag 1 -> 로그인 가능
                             //      0 -> 로그인 불가능
@@ -85,7 +89,13 @@ public class SignInActivity extends BaseActivity{
                                     spfEditor.commit();
                                 }
 
+<<<<<<< HEAD
                                 setUserName(USER_NAME); //id값 입력
+=======
+                                //TODO 재우형 로그인 성공했을 때 사용자의 이름이 같이 넘어오게 만들어야 할듯..
+                                //사용자 이름도 sheared 로 관리하는게 편할듯
+                                setUserName(userObject.getString("name")); //id값 입력
+>>>>>>> 6b7654934872fafe42bc1efdbed225efb8157e28
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
@@ -116,5 +126,10 @@ public class SignInActivity extends BaseActivity{
     @Override
     protected boolean useToolbar() {
         return false;
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
