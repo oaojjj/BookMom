@@ -46,6 +46,7 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
+
         actList.add(this);
         tvBookCount = findViewById(R.id.tv_book_count);
         bt_search=findViewById(R.id.bt_search);
