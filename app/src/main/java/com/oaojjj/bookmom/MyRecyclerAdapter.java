@@ -34,8 +34,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     }
 
     public MyRecyclerAdapter(Context Context, List<BookItem> itemList) {
-        bookMarkDB = new BookMarkDB(mContext);
         mContext = Context;
+        bookMarkDB = new BookMarkDB(mContext);
         mItemList = itemList;
     }
 

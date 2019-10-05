@@ -50,11 +50,6 @@ public class BookInfoActivity extends BaseActivity {
 
         //TODO 인텐트해서 책제목 넘기거나 해서 책제목을 파라미터로 넘겨야함
         bookMarkDB = new BookMarkDB(getApplicationContext());
-        if (bookMarkDB.isBookMark("책제목")) {
-            ibBookMark.setSelected(true);
-        } else {
-            ibBookMark.setSelected(false);
-        }
 
         // TODO 재우형 상세정보 보기에 웹뷰연동?
         // WebView 구현해서 책 제목을 넘겨서 책에 대한 정보페이지를 웹으로 나타낸다.
@@ -75,11 +70,14 @@ public class BookInfoActivity extends BaseActivity {
                                   tvTitle.setText(bookObject.getString("title"));
                                   tvCategory.setText(bookObject.getString("kind"));
                                   rental = bookObject.getString("available");
-                                  if (isSignIn() || rental.contentEquals("1")) {
-                                      rental = bookObject.getString("available");
-                                      if (!isSignIn() || rental.contentEquals("1")) {
+                                  if (!isSignIn() || rental.contentEquals("1")) {
                                           btBookRental.setEnabled(false);
-                                      }
+                                          ibBookMark.setEnabled(false);
+                                  }
+                                  if (bookMarkDB.isBookMark(tvTitle.getText().toString())) {
+                                      ibBookMark.setImageResource(R.drawable.ic_bookmark_black_24dp);
+                                  } else {
+                                      ibBookMark.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
                                   }
                               } catch (JSONException e) {
                                   e.printStackTrace();
@@ -100,12 +98,12 @@ public class BookInfoActivity extends BaseActivity {
                     public void onClick(View view) {
                         // 반대로 이미 북마크에 추가 되었는데 눌렀을때 버튼 배경이 바뀌면서 북마크 remove 호출
                         // 버튼 배경은 book_mark_background 에 정의됨
-                        if (bookMarkDB.isBookMark("책제목")) {
-                            ibBookMark.setSelected(false); // 클릭 안되었을 때는 빈배경
-                            bookMarkDB.removeBookMark("책제목"); // 북마크 삭제
+                        if (bookMarkDB.isBookMark(tvTitle.getText().toString())) {
+                            ibBookMark.setImageResource(R.drawable.ic_bookmark_border_black_24dp); // 클릭 안되었을 때는 빈배경
+                            bookMarkDB.removeBookMark(tvTitle.getText().toString()); // 북마크 삭제
                         } else {
-                            ibBookMark.setSelected(true); // 클릭 되었을 때는 검은색 배경
-                            bookMarkDB.addBookMark("책제목"); // 북마크 추가
+                            ibBookMark.setImageResource(R.drawable.ic_bookmark_black_24dp); // 클릭 되었을 때는 검은색 배경
+                            bookMarkDB.addBookMark(tvTitle.getText().toString()); // 북마크 추가
                         }
                     }
                 });
