@@ -22,11 +22,12 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 /**
  * 로그인 화면
  */
-public class SignInActivity extends BaseActivity{
+public class SignInActivity extends BaseActivity {
 
     final static private String SIGN_IN_CHECK = "1";
 
@@ -53,12 +54,12 @@ public class SignInActivity extends BaseActivity{
                 USER_ID = etUserID.getText().toString().trim();
                 USER_PASSWORD = etUserPWD.getText().toString().trim();
 
-                if (USER_ID.isEmpty()){
+                if (USER_ID.isEmpty()) {
                     etUserID.setError("아이디를 입력하세요");
                     etUserID.requestFocus();
                     return;
                 }
-                if(USER_PASSWORD.isEmpty()){
+                if (USER_PASSWORD.isEmpty()) {
                     etUserPWD.setError("비밀번호를 입력하세요");
                     etUserPWD.requestFocus();
                     return;
@@ -79,38 +80,34 @@ public class SignInActivity extends BaseActivity{
                             // flag 1 -> 로그인 가능
                             //      0 -> 로그인 불가능
 
-                            if (flag.equals(SIGN_IN_CHECK))
-                            {
+                            if (flag.equals(SIGN_IN_CHECK)) {
                                 //자동로그인 체크시
-                                if(chAutoSignIn.isChecked()){
-                                    spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
+                                if (chAutoSignIn.isChecked()) {
+                                    spfUser = getApplicationContext().getSharedPreferences("userID", getApplicationContext().MODE_PRIVATE);
                                     spfEditor = spfUser.edit();
-                                    spfEditor.putString(USER_ID,"userID");
+                                    spfEditor.putString(USER_ID, "userID");
                                     spfEditor.commit();
                                 }
 
-<<<<<<< HEAD
                                 setUserName(USER_NAME); //id값 입력
-=======
                                 //TODO 재우형 로그인 성공했을 때 사용자의 이름이 같이 넘어오게 만들어야 할듯..
                                 //사용자 이름도 sheared 로 관리하는게 편할듯
                                 setUserName(userObject.getString("name")); //id값 입력
->>>>>>> 6b7654934872fafe42bc1efdbed225efb8157e28
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                                 finish();
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(SignInActivity.this, "아이디 또는 비밀번호를 틀렸습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            Log.d("SignActivity_e",e.toString());
+                            Log.d("SignActivity_e", e.toString());
                         }
                     }
+
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.d("SignActivity_t",t.toString());
+                        Log.d("SignActivity_t", t.toString());
                     }
                 });
 
@@ -121,12 +118,13 @@ public class SignInActivity extends BaseActivity{
     // 자동로그인 체크시 SharedPreferences 에 유저정보를 입력하여 내부저장소에 저장
     public void onAutoSignInClick(View view) {
         Toast.makeText(this, "자동로그인", Toast.LENGTH_SHORT).show();
-       }
+    }
 
     @Override
     protected boolean useToolbar() {
         return false;
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

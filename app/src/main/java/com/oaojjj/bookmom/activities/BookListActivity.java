@@ -50,9 +50,6 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
 
-
-        adapter = new MyRecyclerAdapter(getApplicationContext());
-
         tvBookCount = findViewById(R.id.tv_book_count);
 
         spinner = findViewById(R.id.sp_book);
@@ -91,7 +88,7 @@ public class BookListActivity extends BaseActivity implements MyRecyclerAdapter.
                             e.printStackTrace();
                         }
                         tvBookCount.setText("( " + dataList.size() + " )");
-                        adapter = new MyRecyclerAdapter(dataList);
+                        adapter = new MyRecyclerAdapter(getApplicationContext(),dataList);
                         adapter.setOnClickListener(BookListActivity.this);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();

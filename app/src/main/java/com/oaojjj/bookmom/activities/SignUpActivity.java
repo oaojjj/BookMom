@@ -16,13 +16,14 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 public class SignUpActivity extends BaseActivity {
 
     private EditText etUserName;
     private EditText etUserID;
     private EditText etUserPWD;
-    private Button btSignUp,btCheckid;
+    private Button btSignUp, btCheckid;
 
     private boolean CHECKED_ID = false;
 
@@ -35,7 +36,7 @@ public class SignUpActivity extends BaseActivity {
         etUserID = findViewById(R.id.et_id);
         etUserPWD = findViewById(R.id.et_password);
         btSignUp = findViewById(R.id.btn_register);
-        btCheckid=findViewById(R.id.btn_checkID);
+        btCheckid = findViewById(R.id.btn_checkID);
         btCheckid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,16 +44,16 @@ public class SignUpActivity extends BaseActivity {
                 checkID.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try{
-                        String a = response.body().string();
-                        if (a.contentEquals("0")) {
-                            CHECKED_ID = true;
-                            Toast.makeText(getApplicationContext(), "사용가능", Toast.LENGTH_SHORT).show();
+                        try {
+                            String a = response.body().string();
+                            if (a.contentEquals("0")) {
+                                CHECKED_ID = true;
+                                Toast.makeText(getApplicationContext(), "사용가능", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "중복된 아이디", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
                         }
-                        else{
-                            Toast.makeText(getApplicationContext(), "중복된 아이디", Toast.LENGTH_SHORT).show();
-                        }}
-                        catch(Exception e){}
                     }
 
                     @Override
@@ -60,7 +61,8 @@ public class SignUpActivity extends BaseActivity {
 
                     }
                 }); //이까지 check id 버튼눌럿을때 동작
-            }});
+            }
+        });
 
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,23 +89,21 @@ public class SignUpActivity extends BaseActivity {
                 if (CHECKED_ID) {
                     // 회원가입 눌렀을때 실행 되게하기 id password, name 순서대로 입력받은 값을 넣고,chkid 값이 true가 되면 회원가입 완료
                     Call<ResponseBody> signUp = RetrofitClient.getInstance().getApi().insert(USER_ID, USER_PASSWORD, USER_NAME);
-<<<<<<< HEAD
-                    spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
+                    spfUser = getApplicationContext().getSharedPreferences("userID", getApplicationContext().MODE_PRIVATE);
                     spfEditor = spfUser.edit();
-=======
                     signUp.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            try{
+                            try {
                                 String a = response.body().string();
-                                if(a.contentEquals("0")){
+                                if (a.contentEquals("0")) {
                                     Toast.makeText(getApplicationContext(), "회원가입성공", Toast.LENGTH_SHORT).show();
-                                    Intent i=new Intent(SignUpActivity.this,MainActivity.class);
+                                    Intent i = new Intent(SignUpActivity.this, MainActivity.class);
                                     startActivity(i);
                                 }
 
+                            } catch (Exception e) {
                             }
-                            catch(Exception e){}
                         }
 
                         @Override
@@ -111,9 +111,7 @@ public class SignUpActivity extends BaseActivity {
 
                         }
                     });
->>>>>>> 6b7654934872fafe42bc1efdbed225efb8157e28
-                }
-                else{
+                } else {
                     Toast.makeText(SignUpActivity.this, "중복되는 id가 존재합니다.", Toast.LENGTH_SHORT).show();
                 }
 
@@ -122,6 +120,7 @@ public class SignUpActivity extends BaseActivity {
 
 
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

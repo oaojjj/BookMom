@@ -15,7 +15,10 @@ import com.oaojjj.bookmom.retrofit.RetrofitClient;
 import com.oaojjj.bookmom.utils.CustomDialog;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -40,20 +43,18 @@ public class BookInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
-
-        bookMarkDB = new BookMarkDB(getApplicationContext());
-        if(bookMarkDB.isBookMark()){
-            ibBookMark.setSelected(true);
-        }
-        else{
-            ibBookMark.setSelected(false);
-        }
-
-
         tvTitle = findViewById(R.id.tv_book_title);
         tvCategory = findViewById(R.id.tv_book_category);
         ibBookMark = findViewById(R.id.ib_book_mark);
         btBookRental = findViewById(R.id.bt_book_rental);
+
+        //TODO 인텐트해서 책제목 넘기거나 해서 책제목을 파라미터로 넘겨야함
+        bookMarkDB = new BookMarkDB(getApplicationContext());
+        if (bookMarkDB.isBookMark("책제목")) {
+            ibBookMark.setSelected(true);
+        } else {
+            ibBookMark.setSelected(false);
+        }
 
         // TODO 재우형 상세정보 보기에 웹뷰연동?
         // WebView 구현해서 책 제목을 넘겨서 책에 대한 정보페이지를 웹으로 나타낸다.
@@ -63,51 +64,51 @@ public class BookInfoActivity extends BaseActivity {
         bno = intent.getExtras().getString("bno");
         Call<ResponseBody> check = RetrofitClient.getInstance().getApi().view(bno);
         check.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
+                          @Override
+                          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                              try {
 
-                    JSONObject jsonObject = new JSONObject(response.body().string());
+                                  JSONObject jsonObject = new JSONObject(response.body().string());
 
-                    JSONArray bookArray = jsonObject.getJSONArray("book");
-                    JSONObject bookObject = bookArray.getJSONObject(0);
-                    tvTitle.setText(bookObject.getString("title"));
-                    tvCategory.setText(bookObject.getString("kind"));
-<<<<<<< HEAD
-                    rental = bookObject.getString("available");
-                    if (isSignIn() || rental.contentEquals("1")) {
-=======
-                    rental=bookObject.getString("available");
-                    if(!isSignIn()||rental.contentEquals("1")){
->>>>>>> 6b7654934872fafe42bc1efdbed225efb8157e28
-                        btBookRental.setEnabled(false);
+                                  JSONArray bookArray = jsonObject.getJSONArray("book");
+                                  JSONObject bookObject = bookArray.getJSONObject(0);
+                                  tvTitle.setText(bookObject.getString("title"));
+                                  tvCategory.setText(bookObject.getString("kind"));
+                                  rental = bookObject.getString("available");
+                                  if (isSignIn() || rental.contentEquals("1")) {
+                                      rental = bookObject.getString("available");
+                                      if (!isSignIn() || rental.contentEquals("1")) {
+                                          btBookRental.setEnabled(false);
+                                      }
+                                  }
+                              } catch (JSONException e) {
+                                  e.printStackTrace();
+                              } catch (IOException e) {
+                                  e.printStackTrace();
+                              }
+                          }
+
+                          @Override
+                          public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                          }
+                      });
+
+                //TODO 재우형 이것도 테스트가 불가능해서 테스트좀 해줘용~ 파라미터는 전부 책 제목
+                ibBookMark.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // 반대로 이미 북마크에 추가 되었는데 눌렀을때 버튼 배경이 바뀌면서 북마크 remove 호출
+                        // 버튼 배경은 book_mark_background 에 정의됨
+                        if (bookMarkDB.isBookMark("책제목")) {
+                            ibBookMark.setSelected(false); // 클릭 안되었을 때는 빈배경
+                            bookMarkDB.removeBookMark("책제목"); // 북마크 삭제
+                        } else {
+                            ibBookMark.setSelected(true); // 클릭 되었을 때는 검은색 배경
+                            bookMarkDB.addBookMark("책제목"); // 북마크 추가
+                        }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
-        //TODO 재우형 이것도 테스트가 불가능해서 테스트좀 해줘용~ 파라미터는 전부 책 제목
-        ibBookMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 반대로 이미 북마크에 추가 되었는데 눌렀을때 버튼 배경이 바뀌면서 북마크 remove 호출
-                // 버튼 배경은 book_mark_background 에 정의됨
-                if (bookMarkDB.isBookMark()) {
-                    ibBookMark.setSelected(false); // 클릭 안되었을 때는 빈배경
-                    bookMarkDB.removeBookMark(); // 북마크 삭제
-                } else {
-                    ibBookMark.setSelected(true); // 클릭 되었을 때는 검은색 배경
-                    bookMarkDB.addBookMark(); // 북마크 추가
-                }
-            }
-        });
+                });
 
         // 대여 버튼 다이얼로그 생성
         btBookRental.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +143,9 @@ public class BookInfoActivity extends BaseActivity {
                 btBookRental.setEnabled(false);
                 customDialog.dismiss();
             }
-        };
+        }
+
+        ;
 
         // 취소 버튼
         mNegativeListener = new View.OnClickListener() {
@@ -151,7 +154,9 @@ public class BookInfoActivity extends BaseActivity {
                 Toast.makeText(BookInfoActivity.this, "취소", Toast.LENGTH_SHORT).show();
                 customDialog.dismiss();
             }
-        };
+        }
+
+        ;
 
     }
 

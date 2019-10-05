@@ -19,12 +19,7 @@ import java.util.List;
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder> {
 
     BookMarkDB bookMarkDB;
-    Context mContext;
-
-    public MyRecyclerAdapter(Context mContext) {
-        bookMarkDB = new BookMarkDB(mContext, BookMarkDB.STRING_KEY);
-        this.mContext = mContext;
-    }
+    private Context mContext;
 
     private List<BookItem> mItemList;
 
@@ -38,7 +33,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         mListener = listener;
     }
 
-    public MyRecyclerAdapter(List<BookItem> itemList) {
+    public MyRecyclerAdapter(Context Context, List<BookItem> itemList) {
+        bookMarkDB = new BookMarkDB(mContext);
+        mContext = Context;
         mItemList = itemList;
     }
 
