@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.oaojjj.bookmom.R;
 
+import java.util.ArrayList;
+
 /**
  * Toolbar 가 필요한 모든 Activity 는 이것을 상속해야 한다.
  */
@@ -27,7 +30,7 @@ public class BaseActivity extends AppCompatActivity {
     public static String USER_NAME = "";
     public static String USER_ID="";
     public static String USER_PASSWORD="";
-
+    public static ArrayList <Activity> actList= new ArrayList <Activity>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,15 +95,17 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(myPageIntent);
                 return true;
             case R.id.menu_logout:
+                USER_ID="";
                 if(isSignIn()){
                     spfEditor.remove("userID");
-                    spfEditor.commit();
-                    Toast.makeText(this, "자동로그인 취소", Toast.LENGTH_SHORT).show();
+                  spfEditor.commit();
+                Toast.makeText(this, "자동로그인 취소", Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
-                USER_ID="";
                 Intent i=new Intent(BaseActivity.this,MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                for(int j = 0; j < actList.size(); j++)
+                    actList.get(j).finish();
                 finish();
                 startActivity(i);
                 return true;

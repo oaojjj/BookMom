@@ -41,7 +41,7 @@ public class SignInActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
+        actList.add(this);
         etUserID = findViewById(R.id.et_id);
         etUserPWD = findViewById(R.id.et_pwd);
         chAutoSignIn = findViewById(R.id.cb_auto_sign_in);

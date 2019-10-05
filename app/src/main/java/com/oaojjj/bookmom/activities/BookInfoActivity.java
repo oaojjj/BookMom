@@ -43,6 +43,7 @@ public class BookInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
+        actList.add(this);
         tvTitle = findViewById(R.id.tv_book_title);
         tvCategory = findViewById(R.id.tv_book_category);
         ibBookMark = findViewById(R.id.ib_book_mark);
