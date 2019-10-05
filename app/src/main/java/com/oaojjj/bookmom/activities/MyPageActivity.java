@@ -14,17 +14,13 @@ public class MyPageActivity extends BaseActivity {
     BookMarkDB bookMarkDB;
 
     TextView tvMyBookMark;
-    TextView tvMyRental;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
 
-
-
         tvMyBookMark = findViewById(R.id.tv_my_book_mark);
-        tvMyRental = findViewById(R.id.tv_my_rental);
 
         // 북마크한 책 제목 표시
         for(int i=0;i<bookTitleList.size();i++){

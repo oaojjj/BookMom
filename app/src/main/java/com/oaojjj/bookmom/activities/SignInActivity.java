@@ -1,7 +1,6 @@
 package com.oaojjj.bookmom.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,9 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.oaojjj.bookmom.MyRecyclerAdapter;
 import com.oaojjj.bookmom.R;
-import com.oaojjj.bookmom.models.BookItem;
 import com.oaojjj.bookmom.retrofit.RetrofitClient;
 
 import org.json.JSONArray;
@@ -22,7 +19,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.HEAD;
 
 /**
  * 로그인 화면

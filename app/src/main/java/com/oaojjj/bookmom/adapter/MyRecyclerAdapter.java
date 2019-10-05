@@ -1,4 +1,4 @@
-package com.oaojjj.bookmom;
+package com.oaojjj.bookmom.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.oaojjj.bookmom.activities.BaseActivity;
+import com.oaojjj.bookmom.R;
 import com.oaojjj.bookmom.models.BookItem;
 import com.oaojjj.bookmom.models.BookMarkDB;
 

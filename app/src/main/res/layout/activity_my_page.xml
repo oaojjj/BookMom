@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"/>
     </ScrollView>
 
-    <ScrollView
-        android:id="@+id/scrollView3"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_rental"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -36,11 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view11">
-        <TextView
-            android:id="@+id/tv_my_rental"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/tv_mypage_title"
@@ -109,7 +105,7 @@
         android:layout_height="1dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edge_view_line"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        app:layout_constraintBottom_toTopOf="@+id/rv_rental"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
