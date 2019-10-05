@@ -31,13 +31,18 @@ public class MainActivity extends BaseActivity {
             Log.d("USER_ID_TEST","TEST");
         }
 
-        btMyPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MyPageActivity.class); // 액티비티 이동
-                startActivity(intent);
-            }
-        });
+        if(isSignIn()){
+            btMyPage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, MyPageActivity.class); // 액티비티 이동
+                    startActivity(intent);
+                }
+            });
+        }else{
+            btMyPage.setClickable(false);
+        }
+
 
         btList.setOnClickListener(new View.OnClickListener() {
             @Override
