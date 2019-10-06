@@ -78,16 +78,16 @@ public class SignInActivity extends BaseActivity {
 
                             if (flag.equals(SIGN_IN_CHECK)) {
                                 //자동로그인 체크시
+                                setUserName(userObject.getString("name"));
                                 if (chAutoSignIn.isChecked()) {
                                     spfUser = getApplicationContext().getSharedPreferences(SHARED_USER, getApplicationContext().MODE_PRIVATE);
                                     spfEditor = spfUser.edit();
-                                    spfEditor.putString(USER_ID, "userID");
+                                    spfEditor.putString("userID",USER_ID);
+                                    spfEditor.putString("userName",USER_NAME);
                                     spfEditor.commit();
                                 }
                                 //TODO 재우형 로그인 성공했을 때 사용자의 이름이 같이 넘어오게 만들어야 할듯..
                                 //사용자 이름도 sheared 로 관리하는게 편할듯
-                                setUserName(userObject.getString("name")); //id값 입력
-
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                                 finish();

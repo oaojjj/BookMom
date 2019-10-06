@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oaojjj.bookmom.R;
+import com.oaojjj.bookmom.activities.BaseActivity;
 import com.oaojjj.bookmom.models.BookItem;
 import com.oaojjj.bookmom.models.BookMarkDB;
 
@@ -56,7 +57,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         holder.rental.setText(item.getRental());
 
         //TODO 재우형 북마크 테스트가 불가능해서 일단 만들었는데 되는지 테스트 필요
-        if (bookMarkDB.isBookMark(item.getTitle())) {
+        if (bookMarkDB.isBookMark(item.getTitle())&& BaseActivity.isSignIn()) {
             holder.bookMark.setImageResource(R.drawable.ic_bookmark_black_24dp);
         } else {
             holder.bookMark.setImageResource(R.drawable.ic_bookmark_border_black_24dp);

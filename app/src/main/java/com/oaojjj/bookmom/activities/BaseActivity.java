@@ -98,11 +98,11 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(myPageIntent);
                 return true;
             case R.id.menu_logout:
-                USER_ID = "";
                 if (isSignIn()) {
                     spfEditor.remove("userID");
                     spfEditor.remove("userName");
                     spfEditor.commit();
+                    USER_ID = "";
                     Toast.makeText(this, "자동로그인 취소", Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
@@ -140,7 +140,7 @@ public class BaseActivity extends AppCompatActivity {
         this.USER_NAME = name;
     }
 
-    boolean isSignIn() {
+    static public boolean isSignIn() {
         if (USER_ID.isEmpty())
             return false;
         else
