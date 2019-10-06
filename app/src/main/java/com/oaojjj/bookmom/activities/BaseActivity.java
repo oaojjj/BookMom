@@ -27,21 +27,23 @@ public class BaseActivity extends AppCompatActivity {
     public static SharedPreferences spfUser;
     public static SharedPreferences.Editor spfEditor;
 
+    public static final String SHARED_USER = "user";
     public static String USER_NAME = "";
-    public static String USER_ID="";
-    public static String USER_PASSWORD="";
-    public static ArrayList <Activity> actList= new ArrayList <Activity>();
+    public static String USER_ID = "";
+    public static String USER_PASSWORD = "";
+    public static ArrayList<Activity> actList = new ArrayList<Activity>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_toolbar);
-        // 원래는 유저 이름
-        spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
+        spfUser = getApplicationContext().getSharedPreferences(SHARED_USER, getApplicationContext().MODE_PRIVATE);
         spfEditor = spfUser.edit();
-        spfUser.getString(USER_ID,"");
-        spfUser.getString(USER_NAME," ");
-        //USER_ID = spfUser.getString("userID","");
-        //USER_NAME = spfUser.getString("userName","");
+        USER_ID = spfUser.getString("userID", "");
+        USER_NAME = spfUser.getString("userName", "");
+
+      /*  spfUser.getString(USER_ID,"");
+        spfUser.getString(USER_NAME,"");*/
     }
 
 
@@ -92,25 +94,26 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_my_page:
                 Toast.makeText(getApplicationContext(), "마이페이지", Toast.LENGTH_SHORT).show();
-                Intent myPageIntent = new Intent(this,MyPageActivity.class);
+                Intent myPageIntent = new Intent(this, MyPageActivity.class);
                 startActivity(myPageIntent);
                 return true;
             case R.id.menu_logout:
-                USER_ID="";
-                if(isSignIn()){
+                USER_ID = "";
+                if (isSignIn()) {
                     spfEditor.remove("userID");
-                  spfEditor.commit();
-                Toast.makeText(this, "자동로그인 취소", Toast.LENGTH_SHORT).show();
+                    spfEditor.remove("userName");
+                    spfEditor.commit();
+                    Toast.makeText(this, "자동로그인 취소", Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(getApplicationContext(), "로그아웃", Toast.LENGTH_SHORT).show();
-                Intent i=new Intent(BaseActivity.this,MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                for(int j = 0; j < actList.size(); j++)
+                Intent i = new Intent(BaseActivity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                for (int j = 0; j < actList.size(); j++)
                     actList.get(j).finish();
                 finish();
                 startActivity(i);
                 return true;
-    }
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -128,12 +131,13 @@ public class BaseActivity extends AppCompatActivity {
      *
      * @return 로그인 : true / 비로그인 : false
      */
-    String getUserName(){
+    String getUserName() {
         return USER_NAME;
     }
 
-    void setUserName(String name){
-        this.USER_NAME=name;
+    void setUserName(String name) {
+        spfEditor.putString(name,"userName");
+        this.USER_NAME = name;
     }
 
     boolean isSignIn() {

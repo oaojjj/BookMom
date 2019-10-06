@@ -79,13 +79,11 @@ public class SignInActivity extends BaseActivity {
                             if (flag.equals(SIGN_IN_CHECK)) {
                                 //자동로그인 체크시
                                 if (chAutoSignIn.isChecked()) {
-                                    spfUser = getApplicationContext().getSharedPreferences("userID", getApplicationContext().MODE_PRIVATE);
+                                    spfUser = getApplicationContext().getSharedPreferences(SHARED_USER, getApplicationContext().MODE_PRIVATE);
                                     spfEditor = spfUser.edit();
                                     spfEditor.putString(USER_ID, "userID");
-                                    spfEditor.putString(USER_NAME,"userName");
                                     spfEditor.commit();
                                 }
-                                setUserName(USER_NAME); //id값 입력
                                 //TODO 재우형 로그인 성공했을 때 사용자의 이름이 같이 넘어오게 만들어야 할듯..
                                 //사용자 이름도 sheared 로 관리하는게 편할듯
                                 setUserName(userObject.getString("name")); //id값 입력
@@ -110,12 +108,6 @@ public class SignInActivity extends BaseActivity {
             }
         });
     }
-
-    // 자동로그인 체크시 SharedPreferences 에 유저정보를 입력하여 내부저장소에 저장
-    public void onAutoSignInClick(View view) {
-        Toast.makeText(this, "자동로그인", Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     protected boolean useToolbar() {
         return false;

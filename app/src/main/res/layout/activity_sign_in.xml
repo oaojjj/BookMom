@@ -23,7 +23,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:onClick="onAutoSignInClick"
         android:text="자동로그인"
         app:layout_constraintEnd_toStartOf="@+id/btn_login"
         app:layout_constraintHorizontal_bias="0.968"
