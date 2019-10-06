@@ -39,8 +39,9 @@ public class BaseActivity extends AppCompatActivity {
         spfUser = getApplicationContext().getSharedPreferences("userID",getApplicationContext().MODE_PRIVATE);
         spfEditor = spfUser.edit();
         spfUser.getString(USER_ID,"");
-
         spfUser.getString(USER_NAME," ");
+        //USER_ID = spfUser.getString("userID","");
+        //USER_NAME = spfUser.getString("userName","");
     }
 
 
