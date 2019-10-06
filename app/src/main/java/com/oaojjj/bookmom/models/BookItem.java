@@ -9,7 +9,7 @@ public class BookItem {
         this.title = title;
         this.category = category;
         this.rental = rental;
-        this.bno=bno;
+        this.bno = bno;
     }
 
     public String getTitle() {

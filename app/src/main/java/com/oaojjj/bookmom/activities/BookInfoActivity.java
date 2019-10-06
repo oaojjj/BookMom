@@ -124,7 +124,7 @@ public class BookInfoActivity extends BaseActivity {
         mPositiveListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<ResponseBody> reg = RetrofitClient.getInstance().getApi().r_reg(bno, getUserName(), customDialog.getResultDate());
+                Call<ResponseBody> reg = RetrofitClient.getInstance().getApi().r_reg(bno, USER_ID, customDialog.getResultDate());
                 reg.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
