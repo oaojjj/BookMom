@@ -68,9 +68,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHoler>
         public BookViewHoler(@NonNull View itemView) {
             super(itemView);
 
-            tvTitle = itemView.findViewById(R.id.tv_item_book_title);
-            tvCategory = itemView.findViewById(R.id.tv_item_book_category);
-            returnButton = itemView.findViewById(R.id.bt_rental);
+            tvTitle = itemView.findViewById(R.id.tv_item_book_title1);
+            tvCategory = itemView.findViewById(R.id.tv_item_book_category1);
+            returnButton = itemView.findViewById(R.id.bt_rental1);
         }
     }
 

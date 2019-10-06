@@ -1,9 +1,11 @@
 package com.oaojjj.bookmom.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oaojjj.bookmom.R;
@@ -38,10 +40,12 @@ public class MyPageActivity extends BaseActivity implements BookAdapter.MyRecycl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
-
+        bookMarkDB=new BookMarkDB(getApplicationContext());
         recyclerView = findViewById(R.id.rv_rental);
         tvMyBookMark = findViewById(R.id.tv_my_book_mark);
         dataList= new ArrayList<>();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
         Call<ResponseBody> check = RetrofitClient.getInstance().getApi().mypage(USER_ID);
         check.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -92,6 +96,7 @@ public class MyPageActivity extends BaseActivity implements BookAdapter.MyRecycl
                             if (i == 0) {
                                 tvMyBookMark.setText(bookTitleList.get(i));
                             }
+                            else
                             tvMyBookMark.setText(tvMyBookMark.getText() + "\n" + bookTitleList.get(i));
                         }
                     }
@@ -116,6 +121,25 @@ public class MyPageActivity extends BaseActivity implements BookAdapter.MyRecycl
     // 반납하기 눌렀을때
     @Override
     public void onItemButtonClick(int position) {
+        Call<ResponseBody> check = RetrofitClient.getInstance().getApi().r_del(dataList.get(position).getbno());
+        check.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String a=response.body().string();
+                    Log.d("t",a);
+                    finish();
+                    Intent b=new Intent(MyPageActivity.this,MyPageActivity.class);
+                    startActivity(b);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

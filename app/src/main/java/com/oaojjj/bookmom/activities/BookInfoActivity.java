@@ -73,8 +73,9 @@ public class BookInfoActivity extends BaseActivity {
                                   rental = bookObject.getString("available");
                                   if (!isSignIn() || rental.contentEquals("1")) {
                                           btBookRental.setEnabled(false);
-                                          ibBookMark.setEnabled(false);
                                   }
+                                  if (!isSignIn())
+                                          ibBookMark.setEnabled(false);
                                   if (bookMarkDB.isBookMark(tvTitle.getText().toString())) {
                                       ibBookMark.setImageResource(R.drawable.ic_bookmark_black_24dp);
                                   } else {
@@ -124,7 +125,7 @@ public class BookInfoActivity extends BaseActivity {
         mPositiveListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<ResponseBody> reg = RetrofitClient.getInstance().getApi().r_reg(bno, USER_ID, customDialog.getResultDate());
+                Call<ResponseBody> reg = RetrofitClient.getInstance().getApi().r_reg(bno, USER_ID   , customDialog.getResultDate());
                 reg.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

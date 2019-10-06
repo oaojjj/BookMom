@@ -30,7 +30,7 @@ public interface RetrofitApi {
     Call<ResponseBody> r_reg (@Query("bno") String bno,@Query("id") String id ,@Query("date") String date);
 
     @GET("r_del.php")
-    Call<ResponseBody> r_del (@Query("bno") String bno,@Query("id") String id );
+    Call<ResponseBody> r_del (@Query("bno") String bno);
 
     @GET("view.php")
     Call<ResponseBody> view (@Query("bno") String bno);
