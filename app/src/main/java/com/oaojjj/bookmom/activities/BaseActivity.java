@@ -39,8 +39,9 @@ public class BaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basic_toolbar);
         spfUser = getApplicationContext().getSharedPreferences(SHARED_USER, getApplicationContext().MODE_PRIVATE);
         spfEditor = spfUser.edit();
+        if(USER_ID.isEmpty()){
         USER_ID = spfUser.getString("userID", "");
-        USER_NAME = spfUser.getString("userName", "");
+        USER_NAME = spfUser.getString("userName", "");}
 
       /*  spfUser.getString(USER_ID,"");
         spfUser.getString(USER_NAME,"");*/
