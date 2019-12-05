@@ -6,7 +6,7 @@ use Language
 -------------
 PHP, MySql, Java, Android Studio
 
-부경대 학식 도우미(미완성)
+(미완성)
 ------------------------
 <div margin-right:10px>
 <img width="300" src="https://user-images.githubusercontent.com/49146043/70230968-cb37f300-179c-11ea-974f-8b54e9bf8b36.PNG" hspace=20>
