@@ -2,11 +2,11 @@ BookMom(동아리 도서 관리프로그램)
 ================================
 2019_2학기 WAP 1차 프로젝트
 
-use Language
+use stack
 -------------
 PHP, MySql, Java, Android Studio
 
-(미완성)
+실행 사진
 ------------------------
 <div margin-right:10px>
 <img width="300" src="https://user-images.githubusercontent.com/49146043/70230968-cb37f300-179c-11ea-974f-8b54e9bf8b36.PNG" hspace=20>
